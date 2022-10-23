@@ -16,23 +16,13 @@
 
   <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
 
-  <?php require_once('./createTask.php'); ?> 
-
   <title>Simple ToDo List</title>
 </head>
 
 <body>
-
-  <?php 
-    function createTask(){
-      echo 'aqui';
-    }
-
-    createTask()
-
-    echo 'aqui';
-  ?> 
-
+  <?php
+   require_once('./database/database.php');
+  ?>
   <div class="container">
     <h1 style="text-align: center; margin-top: 3%">
       Simple ToDo List <img src="./assets/logo_icon.png">
@@ -41,23 +31,28 @@
       <div class="bg-light p-5 rounded">
         <div class="mb-3">
           <label for="" class="form-label">Name</label>
-          <input type="text" class="form-control" id="" name="name" value="">
+          <input type="text" class="form-control" id="name" name="name">
         </div>
         <div class="mb-3">
           <label for="" class="form-label">Description</label>
-          <textarea class="form-control" id="description" rows="1" style="resize: none;" name="description"></textarea>
+          <textarea class="form-control" id="description" name="description" rows="1" style="resize: none;"></textarea>
         </div>
-        <button name="createTask" onclick="<?php createTask() ?>" class="button btn btn-primary">Create task</button>
+        <button class="button btn btn-primary" value="createTask">Create task</button>
       </div>
-    <br>
-
   </div>
-
 </body>
 
 <script>
-
-
+  $(document).ready(function(){
+    $('.button').click(function(){
+        var action = $(this).val();
+        var name = $('#name').val();
+        var description = $('#description').val();
+        data =  {'action': action, 'name': name, 'description': description};
+        $.post('ajaxFunctions.php', data, function (response) {
+          // alert(data);
+        });
+    });
+  });
 </script>
-
 </html>
