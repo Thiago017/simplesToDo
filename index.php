@@ -20,9 +20,7 @@
 </head>
 
 <body>
-  <?php
-   require_once('./database/database.php');
-  ?>
+  <?php require_once('./database/database.php'); ?> 
   <div class="container">
     <h1 style="text-align: center; margin-top: 3%">
       Simple ToDo List <img src="./assets/logo_icon.png">
