@@ -16,7 +16,6 @@ if (isset($_POST['action'])) {
 
 function createTask($name, $description, $db)
 {
-  // var_dump("INSERT INTO tasks (name, description) VALUES ('{$name}', '{$description}');");
   $db->exec("INSERT INTO tasks (name, description) VALUES ('{$name}', '{$description}');");
 }
 

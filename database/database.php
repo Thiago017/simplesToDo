@@ -9,10 +9,10 @@ class MyDB extends SQLite3
 }
 $db = new MyDB();
 
-$db->exec("CREATE TABLE tasks (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, observation TEXT);");
+// $db->exec("CREATE TABLE tasks (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, description TEXT);");
 
-if (!$db) {
-  echo $db->lastErrorMsg();
-} else {
-  echo "Opened database successfully\n";
-}
+// if (!$db) {
+//   echo $db->lastErrorMsg();
+// } else {
+//   echo "Opened database successfully\n";
+// }
