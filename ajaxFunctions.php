@@ -1,11 +1,12 @@
 <?php
 
+//ajax
 require_once('./database/database.php');
 
 if (isset($_POST['action'])) {
   switch ($_POST['action']) {
     case 'createTask':
-      createTask($_POST['name'], $_POST['description']);
+      createTask($_POST['name'], $_POST['description'], $db);
       break;
     case 'select':
       select();
@@ -13,9 +14,10 @@ if (isset($_POST['action'])) {
   }
 }
 
-function createTask()
+function createTask($name, $description, $db)
 {
-  $db->exec("INSERT INTO tasks (name, description) VALUES ('teste', 'isso é um teste'");
+  // var_dump("INSERT INTO tasks (name, description) VALUES ('{$name}', '{$description}');");
+  $db->exec("INSERT INTO tasks (name, description) VALUES ('{$name}', '{$description}');");
 }
 
 function insert()

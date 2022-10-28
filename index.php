@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<?php echo `whoami`; 
+//index
+?>
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,37 +24,42 @@
 </head>
 
 <body>
-  <?php require_once('./database/database.php'); ?> 
+  <?php require_once('./database/database.php'); ?>
   <div class="container">
     <h1 style="text-align: center; margin-top: 3%">
       Simple ToDo List <img src="./assets/logo_icon.png">
     </h1>
 
-      <div class="bg-light p-5 rounded">
-        <div class="mb-3">
-          <label for="" class="form-label">Name</label>
-          <input type="text" class="form-control" id="name" name="name">
-        </div>
-        <div class="mb-3">
-          <label for="" class="form-label">Description</label>
-          <textarea class="form-control" id="description" name="description" rows="1" style="resize: none;"></textarea>
-        </div>
-        <button class="button btn btn-primary" value="createTask">Create task</button>
+    <div class="bg-light p-5 rounded">
+      <div class="mb-3">
+        <label for="" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name" name="name">
       </div>
+      <div class="mb-3">
+        <label for="" class="form-label">Description</label>
+        <textarea class="form-control" id="description" name="description" rows="1" style="resize: none;"></textarea>
+      </div>
+      <button class="button btn btn-primary" value="createTask">Create task</button>
+    </div>
   </div>
 </body>
 
 <script>
-  $(document).ready(function(){
-    $('.button').click(function(){
-        var action = $(this).val();
-        var name = $('#name').val();
-        var description = $('#description').val();
-        data =  {'action': action, 'name': name, 'description': description};
-        $.post('ajaxFunctions.php', data, function (response) {
-          // alert(data);
-        });
+  $(document).ready(function() {
+    $('.button').click(function() {
+      var action = $(this).val();
+      var name = $('#name').val();
+      var description = $('#description').val();
+      data = {
+        'action': action,
+        'name': name,
+        'description': description
+      };
+      $.post('ajaxFunctions.php', data, function(response) {
+        // alert(data);
+      });
     });
   });
 </script>
+
 </html>

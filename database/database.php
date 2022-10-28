@@ -1,13 +1,16 @@
 <?php
+//database
+class MyDB extends SQLite3
+{
+  function __construct()
+  {
+    $this->open('./database/simpletodolist.db', SQLITE3_OPEN_READWRITE);
+  }
+}
+$db = new MyDB();
 
-$db = new SQLite3('./database/simpletodolist.db');
-
-$db->exec("CREATE TABLE IF NOT EXISTS tasks (id INTEGER PRIMARY KEY, name TEXT NOT NULL, description TEXT);");
-
-$db->exec("INSERT INTO tasks (name, description) VALUES('teste 1', 'isso e o primeiro teste')");
-$db->exec("INSERT INTO tasks (name, description) VALUES('teste 2', 'isso e o segundo teste')");
-
-// $db->exec("CREATE TABLE IF NOT EXISTS tasks (
-//   id INTEGER PRIMARY KEY AUTOINCREMENT,
-//   name TEXT NOT NULL,
-//   description TEXT);");
+if (!$db) {
+  echo $db->lastErrorMsg();
+} else {
+  echo "Opened database successfully\n";
+}
