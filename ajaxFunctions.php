@@ -6,7 +6,9 @@ require_once('./database/database.php');
 if (isset($_POST['action'])) {
   switch ($_POST['action']) {
     case 'createTask':
-      createTask($_POST['name'], $_POST['description'], $db);
+      if ($_POST['name'] != null && $_POST['description']!= null ) {
+        createTask($_POST['name'], $_POST['description'], $db);
+      }
       break;
     case 'select':
       select();

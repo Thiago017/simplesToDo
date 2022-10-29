@@ -8,16 +8,12 @@
   <script src="./assets/bootstrap/js/popper.min.js"></script>
   <script src="./assets/bootstrap/js/bootstrap.min.js"></script>
   <script src="./assets/jquery/js/jquery-3.6.1.js"></script>
-  <script type="text/javascript" src="./assets/datatables/js/bootstrap.bundle.js"></script>
-  <script type="text/javascript" src="./assets/datatables/js/jquery.dataTables.js"></script>
-  <script type="text/javascript" src="./assets/datatables/js/dataTables.bootstrap5.js"></script>
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <link href="./assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="./assets/fontawesome/css/fontawesome.css" rel="stylesheet">
   <link href="./assets/fontawesome/css/brands.css" rel="stylesheet">
   <link href="./assets/fontawesome/css/solid.css" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="./assets/datatables/css/dataTables.bootstrap5.css" />
 
   <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
 
@@ -63,58 +59,72 @@
       var action = $(this).val();
       var name = $('#name').val();
       var description = $('#description').val();
-      data = {
-        'action': action,
-        'name': name,
-        'description': description
-      };
-      $.post('ajaxFunctions.php', data, function(response) {
-        $('#name').val('');
-        $('#description').val('');
-        $('#table_content').empty();
-        generateTable()
-      });
-    });
 
-    generateTable();
+      console.log(!name, !description)
+
+      if (!name, !description) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: "Name or description can't be empty!",
+        })
+      } else {
+        data = {
+          'action': action,
+          'name': name,
+          'description': description
+        };
+        $.post('ajaxFunctions.php', data, function(response) {
+          $('#name').val('');
+          $('#description').val('');
+          $('#table_content').empty();
+        }).done(function() {
+          generateTable()
+        })
+      }
+    });
+    generateTable()
   });
 
   function deleteTask(id) {
     swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'No, cancel!',
-    })
-    .then((result) => {
-      if (result.isConfirmed) {
-        $.ajax({
-          url: 'ajaxFunctions.php',
-          type: 'POST',
-          dataType: 'json',
-          "data": {'action': 'deleteTask', 'id': id},
-          success: function(data) {
-            if (data.status == 201) {
-              swal.fire(
-                'Good job!',
-                'You clicked the button!',
-                'success',
-              );
-              $('#table_content').empty();
-              generateTable()
-            } else {
-              if (data.msg != '') {
-                swal.fire(data.msg, {
-                  icon: "error",
-                });
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel!',
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          $.ajax({
+            url: 'ajaxFunctions.php',
+            type: 'POST',
+            dataType: 'json',
+            "data": {
+              'action': 'deleteTask',
+              'id': id
+            },
+            success: function(data) {
+              if (data.status == 201) {
+                swal.fire(
+                  'Good job!',
+                  'You clicked the button!',
+                  'success',
+                );
+                $('#table_content').empty();
+                generateTable()
+              } else {
+                if (data.msg != '') {
+                  swal.fire(data.msg, {
+                    icon: "error",
+                  });
+                }
               }
             }
-          }
-        })
-      }
-    });
+          })
+        }
+      });
   }
 
   function generateTable() {
@@ -139,8 +149,6 @@
         </tr>
         `);
       });
-    }).done(function() {
-      $('#table').DataTable()
     })
   }
 </script>
